@@ -10,12 +10,29 @@ impl CertificateVerifier {
 
     // Register certificate hash
     pub fn register_hash(env: Env, hash: BytesN<32>) {
+
+        // store certificate hash
         env.storage().instance().set(&hash, &true);
+
+        // emit blockchain event when certificate is registered
+        env.events().publish(
+            ("certificate", "registered"),
+            hash.clone()
+        );
     }
 
     // Verify certificate hash
     pub fn verify_hash(env: Env, hash: BytesN<32>) -> bool {
-        env.storage().instance().get(&hash).unwrap_or(false)
+
+        let result = env.storage().instance().get(&hash).unwrap_or(false);
+
+        // emit event when verification happens
+        env.events().publish(
+            ("certificate", "verified"),
+            (hash.clone(), result)
+        );
+
+        result
     }
 }
 
