@@ -1,0 +1,30 @@
+name: Soroban CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Install Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+
+      - name: Run contract tests
+        run: cargo test
+
+      - name: Build frontend
+        run: |
+          cd certificate-frontend
+          npm install
+          npm run build
