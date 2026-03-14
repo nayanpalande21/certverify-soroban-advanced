@@ -97,6 +97,12 @@ certificate-verifier/
 │   └── vite.config.ts
 │
 ├── screenshots/
+│   ├── walletconnection.png
+│   ├── registeredcertificate.png
+│   ├── certificatevalid.png
+│   ├── testspassing.png
+│   ├── mobile-view.png
+│   └── cicd-pipeline.png
 │
 ├── Cargo.toml
 └── README.md
@@ -256,8 +262,6 @@ http://localhost:5173
 
 # Example On-Chain Transaction
 
-Example transaction explorer link
-
 https://stellar.expert/explorer/testnet/tx/1202ac4435c3fda6a9ac32f32166048234069f68c4a6cf70aefd76310f037e84
 
 Transaction Hash
@@ -311,8 +315,6 @@ Automated workflow performs:
 * Dependency installation
 * Smart contract compilation
 * Running `cargo test`
-
-Pipeline screenshot
 
 ![CI Pipeline](screenshots/cicd-pipeline.png)
 
