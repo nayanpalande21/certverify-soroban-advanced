@@ -303,7 +303,7 @@ The frontend interface adapts to mobile screen sizes for improved usability.
 
 GitHub Actions pipeline automatically runs smart contract tests.
 
-![CI](https://github.com/nayanpalande21/certverify-soroban-advanced/actions/workflows/ci.yml/badge.svg)
+
 
 ---
 
