@@ -3,7 +3,9 @@
 mod token;
 
 use soroban_sdk::{contract, contractimpl, Env, BytesN};
-
+// CertificateVerifier smart contract
+// Handles certificate registration, verification,
+// event emission and token minting interaction.
 #[contract]
 pub struct CertificateVerifier;
 
