@@ -199,6 +199,12 @@ Hash: 1202ac4435c3fda6a9ac32f32166048234069f68c4a6cf70aefd76310f037e84
 
 ---
 
+## CI/CD Status
+
+GitHub Actions pipeline runs automated tests for the Soroban smart contract.
+
+![CI](https://github.com/nayanpalande21/certverify-soroban-advanced/actions/workflows/ci.yml/badge.svg)
+
 ##  Deployment
 
 The frontend is deployed on Vercel using a production build.
