@@ -41,7 +41,7 @@ impl CertificateVerifier {
     pub fn verify_hash(env: Env, hash: BytesN<32>) -> bool {
 
         let result = env.storage().instance().get(&hash).unwrap_or(false);
-
+               // emit verification event for blockchain monitoring
         env.events().publish(
             ("certificate", "verified"),
             (hash.clone(), result)
