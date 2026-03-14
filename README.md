@@ -1,246 +1,388 @@
-##  CertVerify – Decentralized Certificate Verification dApp
+# CertVerify – Decentralized Certificate Verification dApp
 
-CertVerify is a complete end-to-end mini-dApp built using **Stellar Soroban smart contracts** and a **React + TypeScript frontend** to register and verify certificate hashes on-chain.
+CertVerify is a complete end-to-end decentralized application built using **Stellar Soroban smart contracts** and a **React + TypeScript frontend** to register and verify certificate hashes on-chain.
 
-This project demonstrates a full Web3 workflow including smart contract development, testing, frontend integration, wallet signing, caching, deployment, and blockchain verification.
+The application ensures certificate authenticity by storing cryptographic hashes of certificates on the **Stellar Testnet**, allowing anyone to verify them using the blockchain.
+
+This project demonstrates a full Web3 workflow including:
+
+* Smart contract development
+* Contract testing
+* Wallet integration
+* Frontend-blockchain interaction
+* CI/CD automation
+* Mobile responsive UI
+* Production deployment
 
 ---
 
-##  Project Overview
+# Live Demo
+
+Live Application
+
+https://certverify-soroban-dapp-f9wagp083-nayanpalande21s-projects.vercel.app
+
+---
+
+# Demo Video
+
+https://youtu.be/oYaWmjuavS4
+
+The demo demonstrates:
+
+* Wallet connection using Freighter
+* Uploading certificate files
+* Automatic SHA-256 hashing
+* On-chain registration
+* Blockchain verification
+* Explorer transaction proof
+
+---
+
+# Project Overview
 
 CertVerify allows users to:
 
-- Upload a certificate file (.pdf, .png, .jpg)
-- Automatically generate a SHA-256 hash of the file
-- Register the hash on Stellar Testnet via a Soroban smart contract
-- Verify certificate authenticity directly from the blockchain
-- View transaction proof on Stellar Expert Explorer
-- Experience loading states and local caching for improved UX
+* Upload a certificate file (.pdf, .png, .jpg)
+* Automatically generate a SHA-256 hash
+* Register the hash on the blockchain
+* Verify certificate authenticity
+* View transaction proof on Stellar Explorer
+* Cache verification results locally
 
-The goal is to ensure certificate integrity, immutability, and decentralized verification using blockchain technology.
+The goal is to ensure **certificate integrity, immutability, and decentralized verification**.
 
 ---
 
-## Tech Stack
+# Tech Stack
 
 ## Smart Contract
-- Rust
-- Soroban SDK v25
-- Stellar Testnet
 
-##  Frontend
-- React 19
-- Vite
-- TypeScript
-- @stellar/stellar-sdk
-- @stellar/freighter-api
-- crypto-js (SHA-256)
+* Rust
+* Soroban SDK v25
+* Stellar Testnet
 
-##  Wallet
-- Freighter Wallet (Testnet)
+## Frontend
 
-##  Deployment
--Vercel (Production Build)
+* React 19
+* Vite
+* TypeScript
+* @stellar/stellar-sdk
+* @stellar/freighter-api
+* crypto-js (SHA-256)
+
+## Wallet
+
+* Freighter Wallet (Testnet)
+
+## Deployment
+
+* Vercel
 
 ---
 
-##  Project Structure
+# Project Structure
 
+```
 certificate-verifier/
 │
 ├── src/
-│   └── lib.rs                     # Soroban smart contract
+│   ├── lib.rs
+│   └── token.rs
 │
 ├── certificate-frontend/
 │   ├── src/
-│   │   └── App.tsx                # React frontend
+│   │   └── App.tsx
 │   ├── package.json
 │   └── vite.config.ts
 │
+├── screenshots/
+│
 ├── Cargo.toml
 └── README.md
+```
 
 ---
 
-##  Smart Contract
+# Smart Contract
 
-Contract Name: `CertificateVerifier`
+Contract Name
 
-### Functions
+```
+CertificateVerifier
+```
 
-#### register_certificate(hash: BytesN<32>, user: Address)
-Stores the certificate hash on-chain linked to a user address.
+## Functions
 
-#### verify_certificate(hash: BytesN<32>) -> bool
-Checks if the certificate hash exists in contract storage.
+### register_hash(hash: BytesN<32>)
 
-### Testing
+Stores a certificate hash on-chain.
 
-This project includes 3+ unit tests:
+### verify_hash(hash: BytesN<32>) → bool
 
-- Register certificate successfully
-- Verify existing certificate
-- Verify non-existing certificate
-
-Run tests using:
-
-cargo test
-
-All tests pass successfully.
+Checks if the certificate hash exists in blockchain storage.
 
 ---
 
-##  Contract Testing
+# Certificate Token Contract
 
-This project includes 3 unit tests:
+CertVerify Level-4 includes an additional contract demonstrating **inter-contract logic**.
 
-1. Test registering a certificate
-2. Test verifying an existing certificate
-3. Test verifying a non-existing certificate
+Contract Name
 
-## Run Tests
+```
+CertificateToken
+```
 
-From project root:
+### Function
 
+```
+mint(owner: Address, cert_hash: BytesN<32>)
+```
+
+Purpose:
+
+* Represents certificates as blockchain tokens
+* Demonstrates contract interaction patterns
+* Enables tokenized credentials
+
+---
+
+# Advanced Contract Architecture (Level 4)
+
+Level-4 extends the base project with advanced Soroban features.
+
+### Implemented Features
+
+* Blockchain event logging
+* Inter-contract communication
+* Certificate token minting
+* CI/CD contract testing
+* Mobile responsive frontend
+* Production deployment pipeline
+
+These demonstrate **production-ready smart contract architecture**.
+
+---
+
+# Application Architecture
+
+```
+User
+  │
+  ▼
+React Frontend (Vite + TypeScript)
+  │
+  ▼
+Freighter Wallet
+(Transaction Signing)
+  │
+  ▼
+Soroban Smart Contract
+  │
+  ├── CertificateVerifier
+  │
+  └── CertificateToken
+        │
+        ▼
+Stellar Testnet Blockchain
+```
+
+---
+
+# Contract Testing
+
+This project includes **3 unit tests**.
+
+1. Register certificate successfully
+2. Verify existing certificate
+3. Verify non-existing certificate
+
+Run tests:
+
+```
 cargo test
+```
 
-## Expected Output
+Expected output
 
-running 3 tests  
-test result: ok. 3 passed; 0 failed  
+```
+running 3 tests
+test result: ok. 3 passed; 0 failed
+```
 
-“The contract includes 3 unit tests verifying registration and validation logic.”
 ---
 
 # Running the Frontend
 
-## 1️ Navigate to Frontend Folder
+Navigate to frontend folder
 
+```
 cd certificate-frontend
+```
 
-## 2️ Install Dependencies
+Install dependencies
 
+```
 npm install
+```
 
-## 3️ Start Development Server
+Run development server
 
+```
 npm run dev
+```
 
-App runs at:
+Application runs at
 
+```
 http://localhost:5173
-
-Open this URL in your browser.
+```
 
 ---
 
-##  How to Use the Application
+# How to Use the Application
 
-1. Click Connect Freighter
-2. Approve connection in Freighter Wallet (Testnet)
-3. Upload a certificate file (.pdf, .png, .jpg)
-4. SHA-256 hash is generated automatically
-5. Click Register to store hash on-chain
+1. Click **Connect Freighter**
+2. Approve wallet connection
+3. Upload certificate file
+4. SHA-256 hash is generated
+5. Click **Register**
 6. Confirm transaction in Freighter
-7. View transaction on Stellar Explorer
-8. Click Verify to confirm certificate validity
+7. Transaction stored on blockchain
+8. Click **Verify** to validate certificate
 
 ---
 
-##  Live Demo
+# Example On-Chain Transaction
 
-Live Application:  
-
-
-https://certverify-soroban-dapp-f9wagp083-nayanpalande21s-projects.vercel.app
-
----
-
-##  Example On-Chain Transaction
-
-After registering a certificate, a transaction hash is generated.
-
-You can view it on:
+Example transaction explorer link
 
 https://stellar.expert/explorer/testnet/tx/1202ac4435c3fda6a9ac32f32166048234069f68c4a6cf70aefd76310f037e84
 
-Hash: 1202ac4435c3fda6a9ac32f32166048234069f68c4a6cf70aefd76310f037e84
+Transaction Hash
+
+```
+1202ac4435c3fda6a9ac32f32166048234069f68c4a6cf70aefd76310f037e84
+```
 
 ---
 
-##  Features Implemented
+# Features Implemented
 
-✔ Complete end-to-end mini-dApp  
-✔ Soroban smart contract deployed on Testnet  
-✔ 3+ unit tests passing  
-✔ Wallet connection (Freighter)  
-✔ SHA-256 file hashing  
-✔ On-chain certificate registration  
-✔ On-chain certificate verification  
-✔ Loading states & progress indicators  
-✔ Button disabling during transactions  
-✔ Explorer transaction link  
-✔ Basic caching using localStorage  
-✔ Wallet auto-restore on refresh  
-✔ Clean project structure  
-✔ Meaningful Git commits  
-
----
-
-##  How It Works
-
-1. User uploads certificate file  
-2. SHA-256 hash is generated in frontend  
-3. User signs transaction using Freighter  
-4. Smart contract stores hash on-chain  
-5. Verification checks contract storage  
-6. Result displayed to user  
-7. Result cached locally for faster repeat verification  
+✔ Complete decentralized certificate verification dApp
+✔ Soroban smart contract deployed on Testnet
+✔ 3+ unit tests passing
+✔ Wallet integration with Freighter
+✔ SHA-256 certificate hashing
+✔ On-chain certificate registration
+✔ On-chain certificate verification
+✔ Blockchain event logging
+✔ Token contract interaction
+✔ Explorer transaction proof
+✔ Local caching using localStorage
+✔ Wallet auto-restore
+✔ Clean project structure
+✔ Meaningful Git commits
 
 ---
 
-## CI/CD Status
+# Mobile Responsive UI
 
-GitHub Actions pipeline runs automated tests for the Soroban smart contract.
+The frontend interface adapts to mobile screen sizes for improved usability.
+
+![Mobile UI](screenshots/mobile-view.png)
+
+---
+
+# CI/CD Status
+
+GitHub Actions pipeline automatically runs smart contract tests.
 
 ![CI](https://github.com/nayanpalande21/certverify-soroban-advanced/actions/workflows/ci.yml/badge.svg)
 
-##  Deployment
+---
 
-The frontend is deployed on Vercel using a production build.
+# CI/CD Pipeline Execution
 
-Steps:
-1. Run `npm run build`
+Automated workflow performs:
+
+* Rust installation
+* Dependency installation
+* Smart contract compilation
+* Running `cargo test`
+
+Pipeline screenshot
+
+![CI Pipeline](screenshots/cicd-pipeline.png)
+
+---
+
+# Application Screenshots
+
+## Wallet Connection
+
+![Wallet](screenshots/walletconnection.png)
+
+## Certificate Registration
+
+![Register](screenshots/registeredcertificate.png)
+
+## Certificate Verification
+
+![Verify](screenshots/certificatevalid.png)
+
+## Smart Contract Tests
+
+![Tests](screenshots/testspassing.png)
+
+---
+
+# Deployment
+
+Frontend deployed using **Vercel**.
+
+Deployment Steps:
+
+1. Run
+
+```
+npm run build
+```
+
 2. Deploy using Vercel
-3. Root directory set to `certificate-frontend`
-4. Application preset: Vite
+3. Root directory set to
 
-Live Application:
+```
+certificate-frontend
+```
+
+4. Framework preset
+
+```
+Vite
+```
+
+Live Application
+
 https://certverify-soroban-dapp-f9wagp083-nayanpalande21s-projects.vercel.app
 
 ---
 
-## 🧪 Test Output
+# Production Readiness
 
-All unit tests passing successfully:
+The project follows production-grade development practices:
 
-
-
-##  Demo Video
-
-https://youtu.be/oYaWmjuavS4
-
-The demo shows:
-- Wallet connection  
-- File upload & hash generation  
-- On-chain registration  
-- Explorer verification  
-- On-chain validation  
+* Smart contract testing
+* Continuous integration pipeline
+* Blockchain event logging
+* Modular architecture
+* Wallet-based authentication
+* Responsive frontend
+* Automated deployment
 
 ---
 
-
-## License
+# License
 
 MIT
-
