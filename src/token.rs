@@ -8,13 +8,13 @@ impl CertificateToken {
 
     pub fn mint(env: Env, cert_hash: BytesN<32>) {
 
-        // store minted token
+        // store token
         env.storage().persistent().set(&cert_hash, &true);
 
-        // emit mint event
+        // improved event data
         env.events().publish(
             ("certificate_token", "minted"),
-            cert_hash
+            (cert_hash.clone(), true)
         );
     }
 }

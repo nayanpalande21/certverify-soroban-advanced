@@ -61,6 +61,14 @@
                       "val": {
                         "bool": true
                       }
+                    },
+                    {
+                      "key": {
+                        "string": "count"
+                      },
+                      "val": {
+                        "u32": 1
+                      }
                     }
                   ]
                 }

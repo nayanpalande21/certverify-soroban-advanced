@@ -13,16 +13,25 @@ impl CertificateVerifier {
     // Register certificate hash
     pub fn register_hash(env: Env, hash: BytesN<32>) {
 
+        // prevent duplicate registration
+        if env.storage().instance().get::<BytesN<32>, bool>(&hash).unwrap_or(false) {
+            panic!("Certificate already registered");
+        }
+
         // store certificate hash
         env.storage().instance().set(&hash, &true);
 
-        // emit registration event
+        // update certificate counter
+        let count: u32 = env.storage().instance().get(&"count").unwrap_or(0);
+        env.storage().instance().set(&"count", &(count + 1));
+
+        // emit event
         env.events().publish(
             ("certificate", "registered"),
             hash.clone()
         );
 
-        // call token contract (simulated inter-contract logic)
+        // mint certificate token
         token::CertificateToken::mint(env.clone(), hash.clone());
     }
 
@@ -31,13 +40,17 @@ impl CertificateVerifier {
 
         let result = env.storage().instance().get(&hash).unwrap_or(false);
 
-        // emit verification event
         env.events().publish(
             ("certificate", "verified"),
             (hash.clone(), result)
         );
 
         result
+    }
+
+    // Get total registered certificates
+    pub fn total_certificates(env: Env) -> u32 {
+        env.storage().instance().get(&"count").unwrap_or(0)
     }
 }
 
