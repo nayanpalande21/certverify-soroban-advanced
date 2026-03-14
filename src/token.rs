@@ -1,4 +1,4 @@
-use soroban_sdk::{contract, contractimpl, Env, Address, BytesN};
+use soroban_sdk::{contract, contractimpl, Env, BytesN};
 
 #[contract]
 pub struct CertificateToken;
@@ -6,11 +6,12 @@ pub struct CertificateToken;
 #[contractimpl]
 impl CertificateToken {
 
-    pub fn mint(env: Env, owner: Address, cert_hash: BytesN<32>) {
-        let key = (owner.clone(), cert_hash.clone());
+    pub fn mint(env: Env, cert_hash: BytesN<32>) {
 
-        env.storage().persistent().set(&key, &true);
+        // store minted token
+        env.storage().persistent().set(&cert_hash, &true);
 
+        // emit mint event
         env.events().publish(
             ("certificate_token", "minted"),
             cert_hash

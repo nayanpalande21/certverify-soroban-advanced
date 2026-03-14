@@ -1,5 +1,7 @@
 #![no_std]
 
+mod token;
+
 use soroban_sdk::{contract, contractimpl, Env, BytesN};
 
 #[contract]
@@ -14,11 +16,14 @@ impl CertificateVerifier {
         // store certificate hash
         env.storage().instance().set(&hash, &true);
 
-        // emit blockchain event when certificate is registered
+        // emit registration event
         env.events().publish(
             ("certificate", "registered"),
             hash.clone()
         );
+
+        // call token contract (simulated inter-contract logic)
+        token::CertificateToken::mint(env.clone(), hash.clone());
     }
 
     // Verify certificate hash
@@ -26,7 +31,7 @@ impl CertificateVerifier {
 
         let result = env.storage().instance().get(&hash).unwrap_or(false);
 
-        // emit event when verification happens
+        // emit verification event
         env.events().publish(
             ("certificate", "verified"),
             (hash.clone(), result)
